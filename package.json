@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "bare-expo",
-  "description": "Example of embedding Bare in an Expo application",
+  "name": "autopass-mobile-example",
+  "description": "Example of using Autopass in an Expo application using https://github.com/holepunchto/react-native-bare.",
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/holepunchto/bare-expo.git"
+    "url": "git+https://github.com/holepunchto/autopass-mobile-example.git"
   },
   "author": "Holepunch",
   "license": "Apache-2.0",
@@ -31,8 +31,6 @@
     "expo-linking": "^7.0.3",
     "expo-router": "^4.0.11",
     "expo-system-ui": "^4.0.5",
-    "hypercore": "^10.38.1",
-    "hyperswarm": "^4.8.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-native": "^0.76.3",
