@@ -1,7 +1,7 @@
 
 # Autopass-example  
   
-Example of using [Autopass](https://github.com/holepunchto/autopass) in an Expo application using <https://github.com/holepunchto/react-native-bare>.  
+Example of using [Autopass](https://github.com/holepunchto/autopass) in an Expo application using <https://github.com/holepunchto/react-native-bare-kit>.  
   
 Works with [Pearpass-example](https://github.com/holepunchto/pearpass-example/)  
   

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Bare",
-    "slug": "bare-expo",
+    "name": "autopass-mobile-example",
+    "slug": "autopass-mobile-example",
     "version": "1.0.0",
     "orientation": "portrait",
     "scheme": "to.holepunch.bare.expo",
