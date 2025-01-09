@@ -17,7 +17,7 @@ npm install
 Generate a bundle  
   
 ```sh  
-bare-pack --platform android --linked --out app/app.bundle.js backend/backend.js
+bare-pack --platform android --linked --out app/app.bundle.mjs backend/backend.mjs
 ```  
   
 When finished, you can run the app on either iOS or Android.  
