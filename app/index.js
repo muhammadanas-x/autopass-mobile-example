@@ -45,7 +45,7 @@ export default function App () {
           }
 
           if (req.command === 'reset') {
-            setDataList((prevDataList) => [''])
+            setDataList((prevDataList) => [])
           }
         })
       })
