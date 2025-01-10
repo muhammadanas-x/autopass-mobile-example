@@ -15,7 +15,7 @@ const rpc = new RPC(IPC, (req, error) => {
 
 // For a clean start
 if (fs.existsSync(path)) {
-  fs.rmSync('/data/data/to.holepunch.bare.expo/autopass-example', {
+  fs.rmSync(path, {
     recursive: true,
     force: true
   })
