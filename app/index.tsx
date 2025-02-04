@@ -26,7 +26,7 @@ export default function App () {
 
     // Correctly passing the args to worklet.start
     worklet
-      .start('/app.bundle', bundle, (args = [Platform.OS, pairingInvite]))
+      .start('/app.bundle', bundle, [Platform.OS, pairingInvite])
       .then(() => {
         const { IPC } = worklet
         // Initialise RPC
