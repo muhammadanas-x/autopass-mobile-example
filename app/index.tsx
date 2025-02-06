@@ -73,7 +73,7 @@ export default function App () {
       ) : (
         <FlatList
           data={dataList}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(_, index) => index.toString()}
           renderItem={({ item }) => (
             <View style={styles.dataItem}>
               <Text style={styles.itemText}>Username: {item.username}</Text>
