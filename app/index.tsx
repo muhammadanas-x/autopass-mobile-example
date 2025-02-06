@@ -6,10 +6,10 @@ import {
   Button,
   FlatList,
   Platform,
-  Clipboard,
   Alert,
   StyleSheet,
 } from "react-native";
+import Clipboard from "@react-native-clipboard/clipboard";
 import { Worklet } from "react-native-bare-kit";
 import bundle from "./app.bundle";
 import RPC from "bare-rpc";

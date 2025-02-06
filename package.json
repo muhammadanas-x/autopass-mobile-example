@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/holepunchto/bare-expo#readme",
   "dependencies": {
+    "@react-native-clipboard/clipboard": "^1.16.1",
     "autopass": "^1.0.2",
     "b4a": "^1.6.7",
     "bare-fs": "^4.0.1",
