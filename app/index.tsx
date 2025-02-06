@@ -15,7 +15,7 @@ import bundle from './app.bundle'
 import RPC from 'bare-rpc'
 import b4a from 'b4a'
 
-export default function App () {
+export default function App() {
   const [dataList, setDataList] = useState([])
   const [pairingInvite, setPairingInvite] = useState('') // State for pairing invite
   const [isWorkletStarted, setIsWorkletStarted] = useState(false) // State to track worklet status

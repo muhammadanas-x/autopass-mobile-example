@@ -43,7 +43,6 @@
     "bare-pack": "^1.2.1",
     "prettier": "^3.3.3",
     "prettier-config-standard": "^7.0.0",
-    "standard": "^17.1.2",
     "typescript": "^5.3.3"
   }
 }

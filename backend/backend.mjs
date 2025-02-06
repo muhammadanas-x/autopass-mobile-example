@@ -7,7 +7,10 @@ import Autopass from 'autopass'
 import Corestore from 'corestore'
 const { IPC } = BareKit
 
-const path = Bare.argv[0] === 'android' ? '/data/data/to.holepunch.bare.expo/autopass-example' : './tmp/autopass-example/'
+const path =
+  Bare.argv[0] === 'android'
+    ? '/data/data/to.holepunch.bare.expo/autopass-example'
+    : './tmp/autopass-example/'
 
 const rpc = new RPC(IPC, (req, error) => {
   // Handle two way communication here
@@ -40,4 +43,3 @@ pass.on('update', async (e) => {
     }
   }
 })
-
