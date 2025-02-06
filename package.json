@@ -39,6 +39,7 @@
     "react-native-safe-area-context": "^4.14.0"
   },
   "devDependencies": {
+    "@types/b4a": "^1.6.4",
     "@types/react": "^18.3.1",
     "bare-pack": "^1.2.1",
     "prettier": "^3.3.3",
