@@ -16,7 +16,6 @@ import RPC from 'bare-rpc'
 import b4a from 'b4a'
 
 export default function App () {
-  const [response, setResponse] = useState(null)
   const [dataList, setDataList] = useState([])
   const [pairingInvite, setPairingInvite] = useState('') // State for pairing invite
   const [isWorkletStarted, setIsWorkletStarted] = useState(false) // State to track worklet status
@@ -89,7 +88,6 @@ export default function App () {
           )}
         />
       )}
-      <Text>{response}</Text>
     </View>
   )
 }
