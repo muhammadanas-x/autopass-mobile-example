@@ -29,7 +29,7 @@ export default function App () {
       .then(() => {
         const { IPC } = worklet
         // Initialise RPC
-        const rpc = new RPC(IPC, (req, error) => {
+        const rpc = new RPC(IPC, (req) => {
           // Handle incoming RPC requests
           if (req.command === 'message') {
             const data = b4a.toString(req.data)
