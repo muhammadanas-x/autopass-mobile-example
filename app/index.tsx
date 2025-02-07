@@ -15,10 +15,18 @@ import bundle from './app.bundle'
 import RPC from 'bare-rpc'
 import b4a from 'b4a'
 
+type PasswordEntry = {
+  username: string;
+  password: string;
+  website: string;
+};
+
 export default function App() {
-  const [dataList, setDataList] = useState([])
-  const [pairingInvite, setPairingInvite] = useState('') // State for pairing invite
-  const [isWorkletStarted, setIsWorkletStarted] = useState(false) // State to track worklet status
+  
+  const [dataList, setDataList] = useState<PasswordEntry[]>([]);
+  const [pairingInvite, setPairingInvite] = useState(""); // State for pairing invite
+  const [isWorkletStarted, setIsWorkletStarted] = useState(false); // State to track worklet status
+
 
   const startWorklet = () => {
     const worklet = new Worklet()
@@ -31,10 +39,12 @@ export default function App() {
         // Initialise RPC
         const rpc = new RPC(IPC, (req) => {
           // Handle incoming RPC requests
-          if (req.command === 'message') {
-            const data = b4a.toString(req.data)
-            const parsedData = JSON.parse(data) // Assuming data is a JSON string
-            const entry = {
+
+          if (req.command === "message") {
+            const data = b4a.toString(req.data);
+            const parsedData = JSON.parse(data); // Assuming data is a JSON string
+            const entry: PasswordEntry = {
+
               username: parsedData[1],
               password: parsedData[2],
               website: parsedData[3]
@@ -52,10 +62,12 @@ export default function App() {
     setIsWorkletStarted(true) // Mark worklet as started
   }
 
-  const copyToClipboard = (item) => {
-    Clipboard.setString(item.password) // Copy password to clipboard
-    Alert.alert('Copied to Clipboard', item.password)
-  }
+
+  const copyToClipboard = (item: PasswordEntry) => {
+    Clipboard.setString(item.password); // Copy password to clipboard
+    Alert.alert("Copied to Clipboard", item.password);
+  };
+
 
   return (
     <View style={styles.container}>
