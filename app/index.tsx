@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   View,
   Text,
@@ -6,17 +6,16 @@ import {
   Button,
   FlatList,
   Platform,
-  Clipboard,
   Alert,
   StyleSheet
 } from 'react-native'
+import Clipboard from '@react-native-clipboard/clipboard'
 import { Worklet } from 'react-native-bare-kit'
 import bundle from './app.bundle'
 import RPC from 'bare-rpc'
 import b4a from 'b4a'
 
-export default function App () {
-  const [response, setResponse] = useState(null)
+export default function App() {
   const [dataList, setDataList] = useState([])
   const [pairingInvite, setPairingInvite] = useState('') // State for pairing invite
   const [isWorkletStarted, setIsWorkletStarted] = useState(false) // State to track worklet status
@@ -30,7 +29,7 @@ export default function App () {
       .then(() => {
         const { IPC } = worklet
         // Initialise RPC
-        const rpc = new RPC(IPC, (req, error) => {
+        const rpc = new RPC(IPC, (req) => {
           // Handle incoming RPC requests
           if (req.command === 'message') {
             const data = b4a.toString(req.data)
@@ -45,7 +44,7 @@ export default function App () {
           }
 
           if (req.command === 'reset') {
-            setDataList((prevDataList) => [])
+            setDataList(() => [])
           }
         })
       })
@@ -74,7 +73,7 @@ export default function App () {
       ) : (
         <FlatList
           data={dataList}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(_, index) => index.toString()}
           renderItem={({ item }) => (
             <View style={styles.dataItem}>
               <Text style={styles.itemText}>Username: {item.username}</Text>
@@ -89,7 +88,6 @@ export default function App () {
           )}
         />
       )}
-      <Text>{response}</Text>
     </View>
   )
 }
