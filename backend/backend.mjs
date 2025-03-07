@@ -25,11 +25,10 @@ if (fs.existsSync(path)) {
 }
 
 fs.mkdirSync(path)
-
 const invite = Bare.argv[1]
 const pair = Autopass.pair(new Corestore(path), invite)
-
 const pass = await pair.finished()
+
 await pass.ready()
 
 pass.on('update', async (e) => {
@@ -37,6 +36,7 @@ pass.on('update', async (e) => {
   req.send('data')
 
   for await (const data of pass.list()) {
+      data.value = JSON.parse(data.value);
     if (data.value[0] === 'password') {
       const req = rpc.request('message')
       req.send(JSON.stringify(data.value))
