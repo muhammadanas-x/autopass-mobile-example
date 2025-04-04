@@ -10,10 +10,6 @@ import {
   StyleSheet
 } from 'react-native'
 import Clipboard from '@react-native-clipboard/clipboard'
-import { Worklet } from 'react-native-bare-kit'
-import bundle from './app.bundle'
-import RPC from 'bare-rpc'
-import b4a from 'b4a'
 
 type PasswordEntry = {
   username: string
@@ -23,48 +19,53 @@ type PasswordEntry = {
 
 export default function App() {
   const [dataList, setDataList] = useState<PasswordEntry[]>([])
-  const [pairingInvite, setPairingInvite] = useState('') // State for pairing invite
-  const [isWorkletStarted, setIsWorkletStarted] = useState(false) // State to track worklet status
+  const [pairingInvite, setPairingInvite] = useState('')
+  const [isWorkletStarted, setIsWorkletStarted] = useState(false)
 
-  const startWorklet = () => {
+  const startWorklet = async () => {
+    if (Platform.OS === 'web') {
+      Alert.alert('Unsupported', 'This feature only works on mobile.')
+      return
+    }
+
+    // ✅ Mobile-only dynamic imports
+    const { Worklet } = await import('react-native-bare-kit')
+    const RPC = (await import('bare-rpc')).default
+    const b4a = (await import('b4a')).default
+
     const worklet = new Worklet()
-
-    // Correctly passing the args to worklet.start
     worklet.start('/app.bundle', bundle, [Platform.OS, pairingInvite])
     const { IPC } = worklet
-    // Initialise RPC
-    new RPC(IPC, (req) => {
-      // Handle incoming RPC requests
 
+    new RPC(IPC, (req) => {
       if (req.command === 'message') {
         const data = b4a.toString(req.data)
-        const parsedData = JSON.parse(data) // Assuming data is a JSON string
+        const parsedData = JSON.parse(data)
         const entry: PasswordEntry = {
           username: parsedData[1],
           password: parsedData[2],
           website: parsedData[3]
         }
-        // Update the dataList with the received entry
-        setDataList((prevDataList) => [...prevDataList, entry])
+        setDataList((prev) => [...prev, entry])
       }
 
       if (req.command === 'reset') {
-        setDataList(() => [])
+        setDataList([])
       }
     })
 
-    setIsWorkletStarted(true) // Mark worklet as started
+    setIsWorkletStarted(true)
   }
 
   const copyToClipboard = (item: PasswordEntry) => {
-    Clipboard.setString(item.password) // Copy password to clipboard
+    Clipboard.setString(item.password)
     Alert.alert('Copied to Clipboard', item.password)
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Autopass-example 🍐</Text>
-      {!isWorkletStarted ? ( // Show input if worklet hasn't started
+      {!isWorkletStarted ? (
         <>
           <TextInput
             style={styles.input}

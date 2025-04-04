@@ -48,9 +48,11 @@
     "react-native": "^0.76.3",
     "react-native-bare-kit": "^0.6.0",
     "react-native-safe-area-context": "^5.1.0",
-    "stream": "npm:bare-node-stream@^1.0.0"
+    "stream": "npm:bare-node-stream@^1.0.0",
+    "react-native-web": "~0.19.13"
   },
   "devDependencies": {
+    "@react-native-community/cli": "^18.0.0",
     "@types/b4a": "^1.6.4",
     "@types/react": "^18.3.1",
     "bare-pack": "^1.2.1",
