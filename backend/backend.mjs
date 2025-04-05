@@ -71,16 +71,23 @@ const topic = drive.discoveryKey
 swarm.join(topic)
 console.log('Joined swarm with topic:', b4a.toString(topic, 'hex'))
 
+
+
 swarm.on('connection', (socket) => {
   console.log('New Hyperswarm connection')
   const stream = memStore.replicate(socket)
 
-  getEthBalance('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045').then(balance => {
+  getEthBalance('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045').then((balance) => {
     console.log('Vitalik ETH Balance:', balance)
+
+    // ✅ Send ETH balance to frontend
+    const req = rpc.request('eth_balance')
+    req.send(balance)
   })
 
   stream.on('error', (err) => console.error('Replication error:', err))
 })
+
 
 swarm.on('error', (err) => console.error('Swarm error:', err))
 

@@ -21,40 +21,49 @@ export default function App() {
   const [dataList, setDataList] = useState<PasswordEntry[]>([])
   const [pairingInvite, setPairingInvite] = useState('')
   const [isWorkletStarted, setIsWorkletStarted] = useState(false)
-
   const startWorklet = async () => {
     if (Platform.OS === 'web') {
       Alert.alert('Unsupported', 'This feature only works on mobile.')
       return
     }
-
-    // ✅ Mobile-only dynamic imports
-    const { Worklet } = await import('react-native-bare-kit')
-    const RPC = (await import('bare-rpc')).default
-    const b4a = (await import('b4a')).default
-
-    const worklet = new Worklet()
-    worklet.start('/app.bundle', bundle, [Platform.OS, pairingInvite])
-    const { IPC } = worklet
-
-    new RPC(IPC, (req) => {
-      if (req.command === 'message') {
-        const data = b4a.toString(req.data)
-        const parsedData = JSON.parse(data)
-        const entry: PasswordEntry = {
-          username: parsedData[1],
-          password: parsedData[2],
-          website: parsedData[3]
+  
+    try {
+      // ✅ Dynamic imports for mobile
+      const { Worklet } = await import('react-native-bare-kit')
+      const RPC = (await import('bare-rpc')).default
+      const b4a = (await import('b4a')).default
+  
+      const worklet = new Worklet()
+  
+      // ✅ Fix Worklet Path
+      const workletPath = Platform.OS === 'android' ? '/data/user/0/com.yourapp/files/app.bundle' : './app.bundle'
+  
+      // ✅ Ensure pairing invite is passed correctly
+      worklet.start(workletPath, [], [Platform.OS, pairingInvite])
+  
+      const { IPC } = worklet
+  
+      new RPC(IPC, (req) => {
+        if (req.command === 'message') {
+          const data = b4a.toString(req.data)
+          const parsedData = JSON.parse(data)
+          const entry: PasswordEntry = {
+            username: parsedData[1],
+            password: parsedData[2],
+            website: parsedData[3]
+          }
+          setDataList((prev) => [...prev, entry])
         }
-        setDataList((prev) => [...prev, entry])
-      }
-
-      if (req.command === 'reset') {
-        setDataList([])
-      }
-    })
-
-    setIsWorkletStarted(true)
+  
+        if (req.command === 'reset') {
+          setDataList([])
+        }
+      })
+  
+      setIsWorkletStarted(true)
+    } catch (error) {
+      Alert.alert('Error', 'Failed to start worklet: ' + error.message)
+    }
   }
 
   const copyToClipboard = (item: PasswordEntry) => {
